@@ -1,0 +1,9 @@
+---
+# handlers file for common
+
+- name: reboot if needed
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by common role."
+    pre_reboot_delay: 5
+    post_reboot_delay: 30
+    reboot_timeout: 600 

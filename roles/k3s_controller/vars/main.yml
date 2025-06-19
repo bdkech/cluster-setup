@@ -1,0 +1,4 @@
+---
+# vars file for k3s_controller
+
+k3s_controller_placeholder_var: true 

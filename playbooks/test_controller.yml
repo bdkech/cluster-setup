@@ -1,0 +1,7 @@
+---
+- name: Test k3s controller installation
+  hosts: controllers
+  become: true
+  roles:
+    - role: common
+    - role: k3s_controller 

@@ -1,0 +1,39 @@
+---
+# tasks file for k3s_controller
+
+- name: Create k3s installation directory
+  ansible.builtin.file:
+    path: /usr/local/bin
+    state: directory
+    mode: '0755'
+
+- name: Download k3s binary
+  ansible.builtin.get_url:
+    url: https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s
+    dest: /usr/local/bin/k3s
+    mode: '0755'
+    force: no
+
+- name: Create k3s service directory
+  ansible.builtin.file:
+    path: /etc/systemd/system
+    state: directory
+    mode: '0755'
+
+- name: Create k3s config directory
+  ansible.builtin.file:
+    path: /etc/rancher/k3s
+    state: directory
+    mode: '0755'
+    recurse: yes
+
+- name: Create k3s manifests directory
+  ansible.builtin.file:
+    path: /var/lib/rancher/k3s/server/manifests
+    state: directory
+    mode: '0755'
+    recurse: yes
+
+- name: Placeholder - Install and configure k3s controller
+  debug:
+    msg: "This will install and configure k3s controller nodes." 
