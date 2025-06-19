@@ -1,0 +1,5 @@
+controller_node: true
+k3s_server_args:
+  - "--tls-san=192.168.1.101"
+  - "--tls-san=192.168.1.102"
+  - "--tls-san=192.168.1.103" 

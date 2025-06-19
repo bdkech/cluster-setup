@@ -1,0 +1,2 @@
+controller_node: false
+k3s_agent_args: [] 
