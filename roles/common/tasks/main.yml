@@ -1,0 +1,51 @@
+---
+# tasks file for common
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
+
+- name: Install common dependencies
+  ansible.builtin.package:
+    name:
+      - curl
+      - sudo
+      - python3
+      - python3-pip
+    state: present
+
+- name: Set hostname from inventory
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Ensure SSH service is enabled and started (Debian)
+  ansible.builtin.service:
+    name: ssh
+    state: started
+    enabled: yes
+  when: ansible_os_family == 'Debian'
+
+- name: Install and configure chrony for time sync (Debian)
+  ansible.builtin.apt:
+    name: chrony
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Set timezone to America/Indianapolis
+  ansible.builtin.timezone:
+    name: America/Indianapolis
+
+- name: Ensure chrony is enabled and started
+  ansible.builtin.service:
+    name: chrony
+    state: started
+    enabled: yes
+
+- name: Install NFS client and server packages (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name:
+      - nfs-common
+      - nfs-kernel-server
+    state: present
+  when: ansible_os_family == 'Debian'

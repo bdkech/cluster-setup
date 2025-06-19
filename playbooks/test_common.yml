@@ -1,0 +1,6 @@
+---
+- name: Test common role on all hosts
+  hosts: all
+  become: true
+  roles:
+    - role: common 
