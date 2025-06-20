@@ -3,7 +3,7 @@
 cluster_name: k3s-ha-cluster
 
 # Version control
-k3s_version: v1.29.4+k3s1
+k3s_version: v1.33.1+k3s1 
 k3s_channel: stable  # Options: stable, latest, testing
 
 # Installation settings
@@ -11,4 +11,4 @@ k3s_install_hard_links: true
 k3s_install_skip_download: false  # Set to true if air-gapped installation
 
 # Security
-k3s_token: "REPLACE_WITH_SECURE_TOKEN"  # Should be at least 32 characters 
+k3s_token: ""  # Should be at least 32 characters 
