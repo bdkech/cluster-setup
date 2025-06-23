@@ -1,0 +1,21 @@
+[Unit]
+Description=Lightweight Kubernetes
+Documentation=https://k3s.io
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/local/bin/k3s server \
+  --token={{ k3s_token }} \
+  {% for arg in k3s_server_args %}{{ arg }} \
+  {% endfor %}
+RestartSec=5s
+LimitNOFILE=1048576
+LimitNPROC=1048576
+TasksMax=infinity
+Delegate=yes
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target 
