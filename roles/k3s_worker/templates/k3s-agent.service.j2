@@ -1,0 +1,22 @@
+[Unit]
+Description=Lightweight Kubernetes Agent
+Documentation=https://k3s.io
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/local/bin/k3s agent \
+  --token={{ k3s_token }} \
+  --server https://{{ hostvars[groups['controllers'][0]].ansible_host | default(groups['controllers'][0]) }}:6443 \
+  {% for arg in k3s_agent_args %}{{ arg }} \
+  {% endfor %}
+RestartSec=5s
+LimitNOFILE=1048576
+LimitNPROC=1048576
+TasksMax=infinity
+Delegate=yes
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target 

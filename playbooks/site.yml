@@ -1,13 +1,20 @@
 ---
-- name: Deploy k3s HA cluster
-  hosts: all
+- name: Deploy k3s controllers
+  hosts: controllers
+  become: true
+  vars_files:
+    - ../group_vars/all.yml
+    - ../group_vars/controllers.yml
+  roles:
+    - role: common
+    - role: k3s_controller
+
+- name: Deploy k3s workers
+  hosts: workers
+  vars_files:
+    - ../group_vars/all.yml
+    - ../group_vars/workers.yml
   become: true
   roles:
     - role: common
-      tags: common
-    - role: k3s_controller
-      when: controller_node | default(false)
-      tags: controllers
-    - role: k3s_worker
-      when: not controller_node | default(false)
-      tags: workers 
+    - role: k3s_worker 
