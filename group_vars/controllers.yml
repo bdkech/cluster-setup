@@ -3,4 +3,5 @@ k3s_server_args:
   - "{% if inventory_hostname == groups['controllers'][0] %}--cluster-init{% else %}--server https://{{ hostvars[groups['controllers'][0]].ansible_host | default(groups['controllers'][0]) }}:6443{% endif %}"
   - "--tls-san=10.0.1.30"
   - "--tls-san=10.0.1.31"
-  - "--tls-san=10.0.1.33" 
+  - "--tls-san=10.0.1.33"
+  - "--disable=traefik,servicelb"
