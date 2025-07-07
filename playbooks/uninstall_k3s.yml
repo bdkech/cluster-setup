@@ -1,0 +1,51 @@
+- name: Stop and uninstall k3s on controllers
+  hosts: controllers
+  become: yes
+  tasks:
+    - name: Stop k3s service
+      ansible.builtin.systemd:
+        name: k3s
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+
+    - name: Remove k3s files and directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /usr/local/bin/k3s
+        - /etc/systemd/system/k3s.service
+        - /etc/rancher/k3s
+        - /var/lib/rancher/k3s
+        - /var/lib/kubelet
+        - /var/lib/cni
+        - /run/flannel
+        - /etc/cni
+        - /var/log/k3s.log
+
+- name: Stop and uninstall k3s on workers
+  hosts: workers
+  become: yes
+  tasks:
+    - name: Stop k3s-agent service
+      ansible.builtin.systemd:
+        name: k3s-agent
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+
+    - name: Remove k3s agent files and directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /usr/local/bin/k3s-agent
+        - /etc/systemd/system/k3s-agent.service
+        - /etc/rancher/k3s
+        - /var/lib/rancher/k3s
+        - /var/lib/kubelet
+        - /var/lib/cni
+        - /run/flannel
+        - /etc/cni
+        - /var/log/k3s.log
